@@ -7,7 +7,7 @@ ENV LANG=C.UTF-8 \
 # Install Erlang
 RUN \
     apt-get update && apt-get install -y \
-      git \
+      curl \
       build-essential \
       libncurses5-dev \
       openssl \
@@ -15,16 +15,12 @@ RUN \
       fop \
       xsltproc \
       unixodbc-dev \
-      curl \
-      wget \
       autoconf && \
     OTP_DOWNLOAD_URL="https://github.com/erlang/otp/archive/OTP-${OTP_VERSION}.tar.gz" && \
     runtimeDeps='libodbc1 \
-	         libsctp1 \
-	         libwxgtk3.0' && \
+	         libsctp1' && \
     buildDeps='unixodbc-dev \
-	       libsctp-dev \
-	       libwxgtk3.0-dev' && \
+	       libsctp-dev' && \
     apt-get update && \
     apt-get install -y --no-install-recommends $runtimeDeps && \
     apt-get install -y --no-install-recommends $buildDeps && \
@@ -36,7 +32,30 @@ RUN \
     ( cd $ERL_TOP && \
 	  ./otp_build autoconf && \
 	  gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" && \
-	  ./configure --build="$gnuArch" && \
+	  ./configure --build="$gnuArch" \
+            --without-javac \
+            --without-wx \
+            --without-debugger \
+            --without-observer \
+            --without-jinterface \
+            --without-cosEvent\
+            --without-cosEventDomain \
+            --without-cosFileTransfer \
+            --without-cosNotification \
+            --without-cosProperty \
+            --without-cosTime \
+            --without-cosTransactions \
+            --without-et \
+            --without-gs \
+            --without-ic \
+            --without-megaco \
+            --without-orber \
+            --without-percept \
+            --without-typer \
+            --enable-threads \
+            --enable-shared-zlib \
+            --enable-ssl=dynamic-ssl-lib \
+            --enable-hipe && \
 	  make -j$(nproc) && \
 	  make install ) && \
 	find /usr/local -name examples | xargs rm -rf && \
