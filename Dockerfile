@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
 ENV LANG=C.UTF-8 \
-    ERLANG_VER=20.3.6 \
+    ERLANG_VER=20.3.8.2 \
     ELIXIR_VER="v1.6.6"
 
 WORKDIR /tmp/erlang-build
