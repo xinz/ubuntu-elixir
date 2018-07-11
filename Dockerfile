@@ -81,6 +81,8 @@ RUN \
 # Install NPM
 RUN \
     curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
+    perl -pi -e 's/deb.nodesource.com\/node/mirrors.tuna.tsinghua.edu.cn\/nodesource\/deb/g' /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && \
     apt-get install -y gcc g++ make \
       nodejs && \
     npm install -g cnpm --registry=https://registry.npm.taobao.org
