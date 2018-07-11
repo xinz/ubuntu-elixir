@@ -50,7 +50,7 @@ WORKDIR /tmp/elixir-build
 # Install Elixir
 RUN \
     ELIXIR_DOWNLOAD_URL="https://github.com/elixir-lang/elixir/archive/${ELIXIR_VERSION}.tar.gz" && \
-    curl -fSL -o ${ELIXIR_VERSION}.tar.gz "ELIXIR_DOWNLOAD_URL" && \
+    curl -fSL -o ${ELIXIR_VERSION}.tar.gz "$ELIXIR_DOWNLOAD_URL" && \
     tar xzf ${ELIXIR_VERSION}.tar.gz -C ./ --strip-components 1 && \
     make && make install && \
     mix local.hex --force && \
